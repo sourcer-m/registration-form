@@ -1,0 +1,1256 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bootstrap.rtl.full.min.css">
+    <link rel="stylesheet" href="font-awesome.min.css"/>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+
+    <script src="datepickers.js"></script>
+    <script src="web-form.js"></script>
+    <script src="form-validation.js"></script>
+    <script src="dataUtils.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="jspdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Pangolin" rel="stylesheet">
+
+    <style>
+        /* https://alefalefalef.co.il/resources/%D7%A4%D7%95%D7%A0%D7%98%D7%99%D7%9D-%D7%91%D7%97%D7%99%D7%A0%D7%9D/?af=39 */
+        @font-face {
+            font-family: 'GveretLevin';
+            src: url('GveretLevinAlefAlefAlef-Regular.eot') format('eot'), url('GveretLevinAlefAlefAlef-Regular.woff') format('woff'), url('GveretLevinAlefAlefAlef-Regular.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'DanaYad';
+            src: url('DanaYadAlefAlefAlef-Normal.eot') format('eot'), url('DanaYadAlefAlefAlef-Normal.woff') format('woff'), url('DanaYadAlefAlefAlef-Normal.otf') format('otf');
+        }
+
+        @font-face {
+            font-family: 'GaliRegular';
+            src: url('Gali-Regular.ttf') format('truetype'), url('Gali-Regular.otf') format('otf');
+        }
+
+        @font-face {
+            font-family: 'ShaharGLRegular';
+            src: url('ShaharGLRegular.woff') format('woff'), url('ShaharGLRegular.ttf') format('ttf');
+        }
+
+        @font-face {
+            font-family: 'Anat';
+            src: url('Anat-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Dafi';
+            src: url('Dafi-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Eyal';
+            src: url('Eyal-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Hadar';
+            src: url('Hadar-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Noa';
+            src: url('Noa-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Ori';
+            src: url('Ori-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Rona';
+            src: url('Rona-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'MichaelRegular';
+            src: url('Michael-Regular.ttf') format('truetype'), url('Michael-Regular.otf') format('otf');
+        }
+
+        @font-face {
+            font-family: 'Aya';
+            src: url('Aya-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Einat4';
+            src: url('Einat4-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Einat5';
+            src: url('Einat5-Regular.woff') format('woff');
+        }
+
+
+        @font-face {
+            font-family: 'Liran';
+            src: url('Liran-Regular.woff') format('woff');
+        }
+
+
+        @font-face {
+            font-family: 'Razi';
+            src: url('Razi-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Yair';
+            src: url('Yair-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Yariv';
+            src: url('Yariv-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Yotam';
+            src: url('Yotam-Regular.woff') format('woff');
+        }
+
+        html {
+            direction: rtl;
+        }
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            position: relative;
+        }
+
+        canvas.field-form {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        #form-wrapper {
+            position: relative;
+            user-select: none;
+        }
+
+        #form-wrapper img {
+            position: absolute;
+        }
+
+        #form-wrapper input.field-form {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.1);
+            letter-spacing: 2px;
+            border: none;
+            outline: none;
+            font-family: 'GveretLevin', 'Pangolin', sans-serif;
+        }
+
+        #form-wrapper canvas.field-form {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.1);
+            cursor: hand;
+
+        }
+
+        #form-wrapper div.field-form {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+
+        }
+
+        #form-wrapper div.field-form div {
+            position: absolute;
+            display: inline-block;
+            pointer-events: none;
+            cursor: pointer;
+            margin-left: -8px;
+
+        }
+
+
+        #save-button {
+            padding:10px 50px;
+            font-size:24px;
+        }
+
+        .double-form-only {
+            display: none;
+        }
+
+        .help-block {
+            display: none;
+        }
+
+        .datepicker {
+            direction: rtl;
+        }
+
+    </style>
+
+    <script>
+      var POSSIBLE_PENS = [
+        "rgb(66, 133, 244)",
+        "rgb(0, 67, 175)",
+        "rgb(44, 28, 76)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)"];
+      var penColor = POSSIBLE_PENS[Math.floor(Math.random() * POSSIBLE_PENS.length)];
+
+
+      var fields = [
+        {
+          "name": "date",
+          "heb": "תאריך",
+          "type": "input",
+          "autoField": TODAY_STR,
+          "x": 30,
+          "y": 120,
+          "size": 24,
+          "width": 140,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "id",
+          "heb": "תעודת זהות",
+          "type": "input",
+          "title": "פרטי החבר",
+          "x": 790,
+          "y": 355,
+          "size": 24,
+          "width": 280,
+          // AT - this is the correct size (font width : 600)
+          "spacing": 16,
+          "special":true,
+          "randomFont": true,
+          "validationType": "number"
+
+        },
+        {
+          "name": "family_name",
+          "heb": "שם משפחה",
+          "type": "input",
+          "x": 400,
+          "y": 355,
+          "size": 24,
+          "width": 280,
+          // AT - this is the correct size for text (font width : 900)
+          "spacing": 2,
+          "randomFont": true
+
+        },
+        {
+          "name": "first_name",
+          "heb": "שם פרטי",
+          "type": "input",
+          "x": 30,
+          "y": 355,
+          "size": 24,
+          "width": 280,
+          // AT - this is the correct size for text (font width : 900)
+          "spacing": 2,
+          "randomFont": true
+
+        },
+        {
+          "name": "father_name",
+          "heb": "שם האב",
+          "type": "input",
+          "x": 885,
+          "y": 420,
+          "size": 24,
+          "width": 162,
+          "randomFont": true
+
+        },
+        {
+          "name": "dob_day",
+          "partOfDate": "dob",
+          "heb": "תאריך לידה (יום בחודש)",
+          "type": "input",
+          "x": 700,
+          "y": 420,
+          "size": 24,
+          "width": 28,
+          "randomFont": true
+
+
+        },
+        {
+          "name": "dob_month",
+          "partOfDate": "dob",
+          "heb": "תאריך לידה (חודש בשנה)",
+          "type": "input",
+          "x": 730,
+          "y": 420,
+          "size": 24,
+          "width": 28,
+          "randomFont": true
+
+        },
+        {
+          "name": "dob_year",
+          "partOfDate": "dob",
+          "heb": "תאריך לידה",
+          "type": "input",
+          "x": 760,
+          "y": 420,
+          "size": 24,
+          "width": 28,
+          "randomFont": true
+        },
+        {
+          "name": "homeland",
+          "heb": "ארץ לידה",
+          "type": "input",
+          "x": 200,
+          "y": 420,
+          "size": 24,
+          "width": 140,
+          "randomFont": true
+
+        },
+        {
+          "name": "immigration_year",
+          "heb": "שנת עלייה",
+          "allowEmpty": true,
+          "type": "input",
+          "x": 30,
+          "y": 420,
+          "size": 24,
+          "width": 80,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "address",
+          "heb": "כתובת",
+          "type": "input",
+          "x": 605,
+          "y": 485,
+          "size": 24,
+          "width": 440,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "city",
+          "heb": "עיר",
+          "type": "input",
+          "x": 305,
+          "y": 485,
+          "size": 24,
+          "width": 240,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "zip",
+          "heb": "מיקוד",
+          "type": "input",
+          "x": 40,
+          "y": 485,
+          "size": 24,
+          "width": 180,
+          "special":true,
+          "randomFont": true,
+          "validationType": "number"
+        },
+
+        {
+          "name": "mobile_phone",
+          "heb": "טלפון נייד",
+          "type": "input",
+          "x": 800,
+          "y": 546,
+          "size": 24,
+          "width": 200,
+          // AT - this is the correct size for phone (font width : 600)
+          "spacing": 5,
+          "randomFont": true
+
+
+        },
+        {
+          "name": "work_phone",
+          "heb": "טלפון בעבודה",
+          "allowEmpty": true,
+          "type": "input",
+          "x": 420,
+          "y": 546,
+          "size": 24,
+          "width": 200,
+          // AT - this is the correct size for phone (font width : 600)
+          "spacing": 5,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "home_phone",
+          "heb": "טלפון בבית",
+          "allowEmpty": true,
+          "type": "input",
+          "x": 80,
+          "y": 546,
+          "size": 24,
+          "width": 200,
+          // AT - this is the correct size for phone (font width : 600)
+          "spacing": 5,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "email_provider",
+          "heb": "דואר אלקטרוני",
+          "type": "input",
+          "part": "emailProvider",
+          "x": 600,
+          "y": 614,
+          "size": 24,
+          "width": 300,
+          "align": "left",
+          // AT 30-12-2017 add ame font to mail
+          "randomFont": true
+
+        },
+
+        {
+          "name": "email_username",
+          "heb": "דואר אלקטרוני",
+          "type": "input",
+          "part": "emailUsername",
+          "x": 315,
+          "y": 614,
+          "size": 24,
+          "width": 237,
+          // AT 30-12-2017 add ame font to mail
+          "randomFont": true
+
+        },
+
+        {
+          "name": "signature",
+          "heb": "חתימה",
+          "type": "signature",
+          "x": 40,
+          "y": 584,
+          "size": 95,
+          "width": 200,
+
+        },
+
+        {
+          "name": "status",
+          "heb": "מצב משפחתי",
+          "type": "signature",
+          "mark": "o",
+          "x": 527,
+          "y": 420,
+          "size": 35,
+          "width": 69,
+
+
+        },
+        {
+          "name": "gender",
+          "heb": "מין",
+          "type": "signature",
+          "mark": "x",
+          "x": 430,
+          "y": 420,
+          "size": 40,
+          "width": 65,
+
+        },
+        {
+          "name": "spouse_id",
+          "heb": "תעודת זהות בן/בת זוג",
+          "type": "input",
+          "title": "פרטי בן/בת הזוג",
+          "x": 790,
+          "y": 755,
+          "size": 24,
+          "width": 280,
+          "spacing": 19,
+          "special":true,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_family_name",
+          "heb": "שם משפחה בן/בת זוג",
+          "type": "input",
+          "x": 400,
+          "y": 755,
+          "size": 24,
+          "width": 280,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_first_name",
+          "heb": "שם פרטי בן/בת זוג",
+          "type": "input",
+          "x": 30,
+          "y": 755,
+          "size": 24,
+          "width": 280,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_father_name",
+          "heb": "שם אב בן/בת זוג",
+          "type": "input",
+          "x": 885,
+          "y": 820,
+          "size": 24,
+          "width": 162,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_dob_day",
+          "partOfDate": "spouse_dob",
+          "heb": "תאריך לידה (יום בחודש) בן/בת זוג",
+          "type": "input",
+          "x": 700,
+          "y": 820,
+          "size": 24,
+          "width": 28,
+          "randomFont": true,
+          "doubleFormOnly": true
+
+        },
+        {
+          "name": "spouse_dob_month",
+          "partOfDate": "spouse_dob",
+          "heb": "תאריך לידה (חודש בשנה) בן/בת זוג",
+          "type": "input",
+          "x": 730,
+          "y": 820,
+          "size": 24,
+          "width": 28,
+          "randomFont": true,
+          "doubleFormOnly": true
+
+        },
+        {
+          "name": "spouse_dob_year",
+          "partOfDate": "spouse_dob",
+          "heb": "תאריך לידה בן/בת זוג",
+          "type": "input",
+          "x": 760,
+          "y": 820,
+          "size": 24,
+          "width": 28,
+          "randomFont": true,
+          "doubleFormOnly": true
+
+        },
+        {
+          "name": "spouse_homeland",
+          "heb": "ארץ לידה בן/בת זוג",
+          "type": "input",
+          "x": 200,
+          "y": 820,
+          "size": 24,
+          "width": 140,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_immigration_year",
+          "heb": "שנת עלייה בן/בת זוג",
+          "allowEmpty": true,
+          "type": "input",
+          "x": 30,
+          "y": 820,
+          "size": 24,
+          "width": 80,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+
+        {
+          "name": "spouse_mobile_phone",
+          "heb": "טלפון נייד בן/בת זוג",
+          "type": "input",
+          "x": 800,
+          "y": 886,
+          "size": 24,
+          "width": 200,
+          // AT - this is the correct size for phone (font width : 600)
+          "spacing": 5,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_work_phone",
+          "heb": "טלפון בעבודה בן/בת זוג",
+          "allowEmpty": true,
+          "type": "input",
+          "x": 420,
+          "y": 886,
+          "size": 24,
+          "width": 200,
+          // AT - this is the correct size for phone (font width : 600)
+          "spacing": 5,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+
+        {
+          "name": "spouse_home_phone",
+          "heb": "טלפון בבית בן/בת זוג",
+          "type": "input",
+          "x": 80,
+          "y": 886,
+          "size": 24,
+          "width": 200,
+          // AT - this is the correct size for phone (font width : 600)
+          "spacing": 5,
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+
+        {
+          "name": "spouse_email_provider",
+          "heb": "דואר אלקטרוני בן/בת זוג",
+          "type": "input",
+          "part": "emailProvider",
+          "x": 600,
+          "y": 946,
+          "size": 24,
+          "width": 300,
+          "align": "left",
+          // AT 30-12-2017 add random font to mail
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+
+        {
+          "name": "spouse_email_username",
+          "heb": "דואר אלקטרוני בן/בת זוג",
+          "type": "input",
+          "part": "emailUsername",
+          "x": 315,
+          "y": 946,
+          "size": 24,
+          "width": 237,
+          // AT 30-12-2017 add random font to mail
+          "randomFont": true,
+          "doubleFormOnly": true
+        },
+
+        {
+          "name": "spouse_signature",
+          "heb": "חתימת בן/בת זוג",
+          "type": "signature",
+          "x": 40,
+          "y": 916,
+          "size": 95,
+          "width": 200,
+          "doubleFormOnly": true
+        },
+        {
+          "name": "spouse_status",
+          "heb": "מצב משפחתי בן/בת זוג",
+          "type": "signature",
+          "mark": "o",
+          "x": 527,
+          "y": 820,
+          "size": 35,
+          "width": 69,
+          "doubleFormOnly": true
+
+        },
+        {
+          "name": "spouse_gender",
+          "heb": "מין בן/בת זוג",
+          "type": "signature",
+          "mark": "x",
+          "x": 430,
+          "y": 815,
+          "size": 40,
+          "width": 65,
+          "doubleFormOnly": true
+
+        },
+
+        {
+          "name": "person_name",
+          "heb": "שם ושם משפחה",
+          "title": "פרטי חיוב הוראת קבע",
+          "type": "input",
+          "x": 670,
+          "y": 1190,
+          "size": 24,
+          "width": 290,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "person_id",
+          "heb": "תעודת זהות",
+          "type": "input",
+          "x": 335,
+          "y": 1190,
+          "size": 24,
+          "width": 300,
+          "spacing": 20,
+          "special":true,
+          "randomFont": true,
+          "validationType": "number"
+
+        },
+
+        {
+          "name": "person_dob_day",
+          "autoField": DAY_STR,
+          "heb": "יום בחודש",
+          "type": "input",
+          "x": 180,
+          "y": 1190,
+          "size": 24,
+          "width": 28,
+          "randomFont": true
+
+        },
+        {
+          "name": "person_dob_month",
+          "autoField": MONTH_STR,
+          "heb": "מספר החודש",
+          "type": "input",
+          "x": 216,
+          "y": 1190,
+          "size": 24,
+          "width": 28,
+          "randomFont": true
+
+        },
+        {
+          "name": "person_dob_year",
+          "autoField": YEAR_STR,
+          "heb": "תאיך",
+          "type": "input",
+          "x": 252,
+          "y": 1190,
+          "size": 24,
+          "width": 28,
+          "randomFont": true
+
+        },
+        {
+          "name": "credit_number",
+          "heb": "כרטיס אשראי",
+          "type": "input",
+          "x": 505,
+          "y": 1110,
+          "size": 24,
+          "width": 500,
+          // AT - this is the correct size (font width : 600)
+          "spacing": 16,
+          "special":true,
+          "randomFont": true
+
+        },
+
+        {
+          "name": "credit_date",
+          "heb": "תוקף כרטיס אשראי",
+          "type": "input",
+          "x": 355,
+          "y": 1110,
+          "size": 24,
+          "width": 90,
+          // AT 30-12-2017 date should be with less space
+          "spacing": 5,
+          "special":true,
+          "randomFont": true
+
+        },
+        {
+          "name": "credit_type",
+          "heb": "סוג כרטיס אשראי",
+          "type": "signature",
+          "x": 20,
+          "y": 1100,
+          "size": 74,
+          "width": 240,
+
+        },
+
+        {
+          "name": "person_signature",
+          "heb": "חתימה לחיוב כרטיס אשראי",
+          "type": "signature",
+          "x": 40,
+          "y": 1163,
+          "size": 80,
+          "width": 130
+        },
+
+      ];
+
+
+      window.onload = function () {
+        buildWebForm();
+        function randomFontGenerate(){
+          const fonts = [
+            'Anat',
+            'Aya',
+            //'Einat4',
+            //'Einat5',
+            //'Liran',
+            //'Razi',
+            //'Yair',
+            //'Yariv',
+           // 'Yotam',
+            'Dafi',
+            'Eyal',
+            'Hadar',
+            'Noa',
+            'Ori',
+            'Rona',
+            'ShaharGLRegular'
+          ];
+          const fontsWithoutEnglishLetters = [
+            'GveretLevin',
+            'DanaYad',
+          ];
+          const index = Math.floor((Math.random() * fonts.length));
+          return  fonts[index];
+        }
+
+        // AT 3-1-2017 in case of GveretLevin or DanaYad we will use Pangolin font
+        function IsFontWithoutEnglishLetters(fontname) {
+          const fontsWithoutEnglishLetters = [
+            'GveretLevin',
+            'DanaYad',
+          ];
+
+          for (var i = 0; i < fontsWithoutEnglishLetters.length; i++) {
+            if (fontsWithoutEnglishLetters[i] == fontname)
+            {
+              return true;
+            }
+          }
+          return false;
+        }
+        const randomFont = randomFontGenerate();
+        var formWrapper = document.querySelector("#form-wrapper");
+        document.querySelector("#font-preview").style.fontFamily = randomFont;
+
+
+        for (var i = 0; i < fields.length; i++) {
+          var field;
+
+          if (fields[i].type == "input") {
+            field = document.createElement("input");
+            field.className = "field-form";
+            field.style.fontSize = fields[i].size + "px";
+            // AT 3-1-2017 in case of GveretLevin or DanaYad we will use Pangolin font
+            if (fields[i].name.indexOf("email") > -1 && IsFontWithoutEnglishLetters(randomFont)) {
+              font = "Pangolin"
+            }
+            else if (fields[i].randomFont){
+              field.style.fontFamily = randomFont;
+            }
+            field.style.top = fields[i].y;
+            field.style.left = fields[i].x;
+            field.style.width = fields[i].width;
+            if (fields[i].spacing) {
+              field.style["letter-spacing"] = fields[i].spacing;
+            }
+            if (fields[i].align) {
+              field.style["text-align"] = fields[i].align;
+            }
+
+            fields[i].field = field;
+
+
+            formWrapper.appendChild(field);
+
+          } else if (fields[i].type == "signature") {
+
+            field = document.createElement("canvas");
+            field.className = "field-form";
+            field.style.top = fields[i].y;
+            field.style.left = fields[i].x;
+            field.style.width = fields[i].width;
+            field.style.height = fields[i].size;
+            field.width = fields[i].width;
+            field.height = fields[i].size;
+            fields[i].field = field;
+            formWrapper.appendChild(field);
+          } else if (fields[i].type == "option") {
+            field = document.createElement("div");
+            field.className = "field-form";
+            field.style.top = fields[i].y;
+            field.style.left = fields[i].x;
+            field.style.width = fields[i].width + "px";
+            field.style.height = fields[i].size + "px";
+            field.style.fontSize = fields[i].size + "px";
+            field.style.lineHeight = fields[i].size + "px";
+            fields[i].field = field;
+
+            var selection = document.createElement("div");
+            selection.className = "selection";
+            selection.textContent = fields[i].mark;
+
+            field.appendChild(selection);
+
+            formWrapper.appendChild(field);
+
+            field.addEventListener("click", function (e) {
+              var selection = this.querySelector("div.selection");
+              selection.style.left = e.offsetX;
+            });
+          }
+          field.id = fields[i].name;
+        }
+
+        document.getElementById("save-button").addEventListener("click", function () {
+          if (!validateForm()) {
+            return;
+          }
+
+          fillCanvasForm();
+
+          var canvas = document.createElement("canvas");
+          var formImage = document.getElementById("form-image");
+          canvas.width = formImage.width;
+          canvas.height = formImage.height;
+
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(formImage, 0, 0, formImage.width, formImage.height);
+          ctx.direction = "rtl";
+          ctx.textAlign = "right";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = penColor;
+
+
+          for (var i = 0; i < fields.length; i++) {
+            // AT 29-12-2017 for the id number
+            var offset = fields[i].width - 15;
+            // AT 30-12-2017 lower the font
+            var offset_y = 7;
+            var font = randomFont;
+            ctx.textAlign = "right";
+            if (fields[i].type == "input") {
+              if (fields[i].name.indexOf("email") > -1) {
+                offset_y = 10;
+                // AT 29-12-2017 handle the English's letters
+                //font = "Pangolin"
+                if (fields[i].name == 'email_provider' || fields[i].name == 'spouse_email_provider') {
+                  ctx.textAlign = "left";
+
+                  offset = 0;
+                }
+              }
+
+
+
+              // AT 30-12-2017 fix the date size problem because the letterSpacing is not working when print to pdf
+              if (fields[i].name == 'credit_date' || fields[i].name == 'date' || fields[i].name.indexOf("day") > -1 || fields[i].name.indexOf("month") > -1  || fields[i].name.indexOf("year") > -1 ) {
+                offset = offset + 15;
+              }
+
+              var value;
+
+              if (fields[i].spacing) {
+                console.log(" fields[i].spacing: " +  fields[i].spacing);
+                // AT - this is the correct size
+                ctx.letterSpacing = fields[i].spacing;
+                ctx.spacing = fields[i].spacing;
+                //ctx.style["letter-spacing"] = fields[i].spacing;
+                console.log(" fields[i].name: " +  fields[i].name);
+                console.log(" ctx.letterSpacing: " +  ctx.letterSpacing);
+                console.log(" ctx.spacing: " +  ctx.spacing);
+              }
+
+
+              if(fields[i].special){
+                value = fields[i].field.value.split("").join(String.fromCharCode(160));
+                ctx.font = fields[i].size + 2 +"px " + font;
+
+              }else{
+                value = fields[i].field.value;
+                ctx.font = fields[i].size +"px " + font;
+              }
+
+              ctx.fillText(value.toLowerCase(), fields[i].x + offset, fields[i].y + fields[i].size / 2 + offset_y);
+            } else if (fields[i].type == "signature") {
+              ctx.drawImage(fields[i].field, fields[i].x, fields[i].y);
+            } else if (fields[i].type == "option") {
+              font = "Pangolin";
+              ctx.font = fields[i].size + "px " + font;
+              if (fields[i].field.children[0].style.left) {
+                offset = 9+parseInt(fields[i].field.children[0].style.left.replace('px',''));
+              }
+
+              ctx.fillText(fields[i].mark, fields[i].x + offset, fields[i].y + 3 + fields[i].size / 2);
+
+
+            }
+
+          }
+
+          var imgData = canvas.toDataURL("image/jpeg", 1.0);
+          var pdf = new jsPDF("p", "px", "a4",true);
+          var margin = 0;
+
+          var width = pdf.internal.pageSize.width - margin * 2;
+          var height = pdf.internal.pageSize.height - margin * 2;
+
+          var pdfRatio = height / width;
+          var currentRatio = canvas.height / canvas.width;
+
+          console.log("page width: " + width);
+          console.log("page height: " + height);
+          console.log("image width: " + canvas.width);
+          console.log("image height: " + canvas.height);
+          console.log("page ratio: " + pdfRatio);
+          console.log("image ratio: " + currentRatio);
+
+          if (pdfRatio > currentRatio) {
+            pdf.addImage(imgData, 'JPEG', margin, margin, width, width * currentRatio,'','FAST');
+          } else {
+            pdf.addImage(imgData, 'JPEG', margin + (width - height / currentRatio) / 2, margin, height / currentRatio, height,'','FAST');
+          }
+          const postMessageValues = extractPostMessageValues(fields, font);
+          try {
+            var pdfToServer = pdf.output('blob');
+            //console.log('post to parent',postMessageValues) ;
+            postToParent(pdfToServer, postMessageValues);
+          }
+          catch (e) {
+            console.log(e);
+          }
+
+         // pdf.save(`${postMessageValues.email}-${postMessageValues.teudatZehutValue}`);
+        // pdf.output('save', 'file.pdf');
+        });
+      };
+
+      function extractPostMessageValues (fields , selectedFont){
+        var postMessageValues  = {
+          teudatZehutValue : 'no_id',
+          firstNameValue: '',
+          familyNameValue : '',
+          email : 'no_email',
+          mobilePhone: '',
+          spouseFirstName : '',
+          spouseFamilyName : '',
+          spouseZehutValue : '',
+          spouseMobilePhone : '',
+          spouseEmail :'',
+          selectedFont : selectedFont
+        };
+
+        var emailUserNameValue = 'none';
+        var emailProviderValue = 'none';
+        var spouseEmailUsernameValue = 'none';
+        var spouseEmailProviderValue = 'none';
+
+        fields.forEach(
+          (field) => {
+            if (isEmailUserNameFieldValue(field)){
+              emailUserNameValue =  field.field.value;
+            }
+
+            if(isEmailProviderFieldValue(field)) {
+              emailProviderValue =  field.field.value;
+            }
+
+            if(isSpouseEmailUserNameValue(field)) {
+              spouseEmailUsernameValue =  field.field.value;
+            }
+
+            if(isSpouseEmailProviderValue(field)) {
+              spouseEmailProviderValue =  field.field.value;
+            }
+
+            if(isTeudatZehutFieldValue(field)) {
+              postMessageValues.teudatZehutValue =  field.field.value;
+            }
+
+            if(isFirstNameFieldValue(field)) {
+              postMessageValues.firstNameValue =  field.field.value;
+            }
+
+            if(isFamilyNameFieldValue(field)) {
+              postMessageValues.familyNameValue =  field.field.value ;
+            }
+
+            if(isMobilePhoneFieldValue(field)) {
+              postMessageValues.mobilePhone =  field.field.value;
+            }
+
+            postMessageValues.email =  emailUserNameValue.length > 1 &&  emailProviderValue.length > 1 ?
+              `${ emailUserNameValue}@${ emailProviderValue}`: 'no_email';
+
+            if(isSpouseIdValue(field)) {
+              postMessageValues.spouseZehutValue =  field.field.value;
+            }
+
+            if(isSpouseFirstNameValue(field)) {
+              postMessageValues.spouseFirstName =  field.field.value;
+            }
+
+            if(isSpouseFamilyNameValue(field)) {
+              postMessageValues.spouseFamilyName =  field.field.value;
+            }
+
+            if(isSpouseMobilePhoneValue(field)) {
+              postMessageValues.spouseMobilePhone =  field.field.value ;
+            }
+
+            postMessageValues.spouseEmail =
+              spouseEmailUsernameValue.length > 1 &&  spouseEmailProviderValue.length > 1 ?
+                `${ spouseEmailUsernameValue}@${ spouseEmailProviderValue}` : '';
+          }
+        );
+
+        return  postMessageValues;
+
+
+        function isTeudatZehutFieldValue(fieldItem){
+          return fieldItem.name.length ===2 && fieldItem.name.indexOf("id") > -1 && fieldItem.field.value.length >4;
+        }
+
+        function isFirstNameFieldValue(fieldItem){
+          return fieldItem.name === 'first_name' && fieldItem.field.value.length > 1;
+        }
+
+        function isFamilyNameFieldValue(fieldItem){
+          return fieldItem.name === 'family_name' && fieldItem.field.value.length > 1;
+        }
+
+        function isEmailUserNameFieldValue(fieldItem){
+          return fieldItem.name === 'email_username' && fieldItem.field.value.length > 1;
+        }
+
+        function isEmailProviderFieldValue(fieldItem){
+          return fieldItem.name === 'email_provider' && fieldItem.field.value.length > 1;
+        }
+
+        function isMobilePhoneFieldValue(fieldItem){
+          return fieldItem.name === 'mobile_phone' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseFirstNameValue(fieldItem){
+          return fieldItem.name === 'spouse_first_name' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseFamilyNameValue(fieldItem){
+          return fieldItem.name === 'spouse_family_name' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseIdValue(fieldItem){
+          return fieldItem.name === 'spouse_id' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseMobilePhoneValue(fieldItem){
+          return fieldItem.name === 'spouse_mobile_phone' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseEmailUserNameValue(fieldItem){
+          return fieldItem.name === 'spouse_email_username' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseEmailProviderValue(fieldItem){
+          return fieldItem.name === 'spouse_email_provider' && fieldItem.field.value.length > 1;
+        }
+      }
+      function postToParent(pdf , postValues){
+        fileToBase64(pdf, (pdf) => {
+          parent.postMessage( {pdf:pdf, tz:postValues.teudatZehutValue , postValues: postValues},
+            "https://www-newlikud-org.filesusr.com")
+        });
+      }
+
+      function fileToBase64(file , callback) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload =  (fileLoadedEvent) => {
+          callback(fileLoadedEvent.target.result);
+        };
+        reader.onerror =  (error) => {
+          console.log('Error: ', error);
+        };
+      }
+    </script>
+
+</head>
+
+<body>
+<div class="container" style="margin-top: 50px">
+    <div class="form-group row">
+        <div class="col-xs-11">
+            המידע, הנתונים ופרטי החיוב הכלולים בטופס הזה, ישמשו לצורך הפנייה לליכוד באמצעות טופס רשמי, והחתימה תשמש גם כחתימה על הטופס הרשמי. <br/>
+            פרט לכך ישמשו הנתונים לצורך שמירת קשר עימך ולטובת העברת הודעות חשובות לרבות בנוגע למצב ההתפקדות. אין חובה למסור את הנתונים. הנתונים לא יועברו לכל גורם אחר.
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-xs-3">
+
+        </div>
+        <div class="col-xs-8">
+            <div>
+                <label>
+                    <input type="radio" name="double-form-radio" checked="" value="single" class="required" title="טופס ליחיד">
+                    טופס ליחיד
+                </label>
+                <label>
+                    <input type="radio" name="double-form-radio" value="double" class="required" title="טופס לזוג">
+                    טופס לזוג
+                </label>
+            </div>
+        </div>
+    </div>
+    <form id="web-form">
+
+    </form>
+</div>
+
+<div class="container" style="margin-top: 50px; opacity: 0.0; width: 1170px; position: absolute; top: 0;z-index: -1">
+
+    <div id="form-wrapper">
+        <img id="form-image" src="register-to-likud.png" style="width: 100%"/>
+    </div>
+    <div id="font-preview">font preview</div>
+
+</div>
+
+</body>
+
+</html>

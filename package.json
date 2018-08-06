@@ -1,0 +1,24 @@
+{
+  "name": "sourcerm.github.io",
+  "version": "1.0.0",
+  "description": "registration form",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sourcer-m/sourcerm.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sourcer-m/sourcerm.github.io/issues"
+  },
+  "homepage": "https://github.com/sourcer-m/sourcerm.github.io#readme",
+  "dependencies": {
+    "connect": "^3.6.6",
+    "express": "^4.16.3",
+    "serve-static": "^1.13.2"
+  }
+}
