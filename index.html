@@ -203,6 +203,8 @@
     </style>
 
     <script>
+      var isDebug = false;
+      var useValidations = truel;
       var POSSIBLE_PENS = [
         "rgb(66, 133, 244)",
         "rgb(0, 67, 175)",
@@ -1049,7 +1051,9 @@
           const postMessageValues = extractPostMessageValues(fields, font);
           try {
             var pdfToServer = pdf.output('blob');
-            //console.log('post to parent',postMessageValues) ;
+            if (isDebug) {
+              console.log('post to parent', postMessageValues);
+            }
             postToParent(pdfToServer, postMessageValues);
           }
           catch (e) {
@@ -1057,7 +1061,9 @@
           }
 
          // pdf.save(`${postMessageValues.email}-${postMessageValues.teudatZehutValue}`);
-        // pdf.output('save', 'file.pdf');
+        if (isDebug) {
+          pdf.output('save', 'file.pdf');
+        }
         });
       };
 
