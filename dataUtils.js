@@ -1,6 +1,7 @@
 function getToday() {
   let date = new Date();
-  let dateStr = `${date.getDate()} / ${date.getMonth() +1} / ${date.getFullYear() - 2000}`;
+  const nbsp = String.fromCharCode(160);
+  let dateStr = `${date.getDate()}${nbsp}/${nbsp}${date.getMonth() +1}${nbsp}/${nbsp}${date.getFullYear() - 2000}`;
 
   if (Math.random() > 0.5) {
     dateStr =  `${date.getDate()}.${date.getMonth() +1}.${date.getFullYear() - 2000}`;
