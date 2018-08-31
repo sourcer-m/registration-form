@@ -139,7 +139,7 @@ function isValidInput(field , element) {
 }
 
 function initDisclamer() {
-  let checkbox = document.getElementById("disclamer");
+  let checkbox = document.getElementById("disclamerLikud");
   checkbox.addEventListener('change', (event) => {
     if (event.target.checked) {
       $('#save-button').removeClass('disabled');
@@ -165,15 +165,29 @@ function buildWebForm() {
   html += ``;
   html += `<div class="form-group row"><div class="col-xs-12">
   <label class="checkbox-inline">
-            <input type="checkbox" id="disclamer" class="required">
+            <input type="checkbox" id="disclamerLikud" class="required">
             אני החתום/ה מטה מבקש/ת להצטרף ולהיות חבר/ה בליכוד, תנועת לאומית ליברלית.<br/>
 אני מצהיר בזה כדלקמן: אני מזדהה עם מטרותיה של תנועת הליכוד, איני חבר/ה במפלגה אחרת, ולא הורשעתי בעבירה שיש עימה קלון.  ידוע לי, כי דמי החבר הינם שנתיים וכי תשלומם יעשה אחת לשנה באמצעות הוראת קבע בהרשאה לחיוב חשבוני בבנק או כרטיס אשראי שלי וכי לא תישלח לי הודעה מיוחדת לפני החיוב. ידוע לי כי דמי החבר השנתיים הינם סך של 64 ש"ח ליחיד וסך של 96 ש"ח לזוג וכן כי שיעור דמי החבר השנתיים יקבע מעת לעת, בהתאם להוראות חוקת תנועת הליכוד. אני מסכים/ה לקבל מהליכוד הודעת דואר אלקטרוני ו/או הודעת מסר קצר. כמו כן אני מרשה לתנועת הליכוד להעביר לחברי התנועה את שמי ואת הפרטים שלי לצורך יצירת קשר, לרבות את כתובת הדואר האלקטרוני שלי.<br/>
         </label> 
 </div></div>`
+  if (unifiedMode){
+    html+= `<div class="form-group row"><div class="col-xs-12">
+             <label class="checkbox-inline">
+                       <input type="checkbox" id="disclamerAgenda" class="required">
+                       <span>קראתי/קראנו את</span>
+                       <span> <a href='https://www.newlikud.org/agenda'>מסמך העקרונות</a></span>
+                       <span>של הליכודניקים החדשים ואני/אנחנו מסכימ/ים איתם.</span>
+                   </label>
+
+
+           </div></div>`;
+    }
+
   html += `<div class="form-group row"><div class="col-xs-8">
     <button type="button" class="btn btn-default navbar-btn btn-primary disabled" id="save-button" disabled>שלח</button>
   </div></div>`;
   document.getElementById("web-form").innerHTML = html;
+
 
   initializePads();
   initializeDoubleForm();

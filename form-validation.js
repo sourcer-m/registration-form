@@ -14,6 +14,9 @@ function markAsValid(element, valid) {
 }
 
 function validateForm() {
+  if (!useValidations){
+    return true;
+  }
   let invalidElement = null;
 
   fields.forEach((f) => {
