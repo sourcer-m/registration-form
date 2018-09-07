@@ -1091,19 +1091,19 @@
         fields.forEach(
           (field) => {
             if (isEmailUserNameFieldValue(field)){
-              emailUserNameValue =  field.field.value;
+              emailUserNameValue =  field.field.value.toLowerCase();
             }
 
             if(isEmailProviderFieldValue(field)) {
-              emailProviderValue =  field.field.value;
+              emailProviderValue =  field.field.value.toLowerCase();
             }
 
             if(isSpouseEmailUserNameValue(field)) {
-              spouseEmailUsernameValue =  field.field.value;
+              spouseEmailUsernameValue =  field.field.value.toLowerCase();
             }
 
             if(isSpouseEmailProviderValue(field)) {
-              spouseEmailProviderValue =  field.field.value;
+              spouseEmailProviderValue =  field.field.value.toLowerCase();
             }
 
             if(isTeudatZehutFieldValue(field)) {
