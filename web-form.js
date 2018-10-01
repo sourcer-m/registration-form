@@ -139,8 +139,12 @@ function isValidInput(field , element) {
 }
 
 function initDisclamer() {
-  let checkbox = document.getElementById("disclamerLikud");
-  checkbox.addEventListener('change', (event) => {
+  if (unifiedMode){
+    initDisclamerUnified();
+    return;
+  }
+  let checkboxLikud = document.getElementById("disclamerLikud");
+  checkboxLikud.addEventListener('change', (event) => {
     if (event.target.checked) {
       $('#save-button').removeClass('disabled');
       $('#save-button').prop('disabled', false);
@@ -149,6 +153,40 @@ function initDisclamer() {
       $('#save-button').prop('disabled', true);
     }
   });
+}
+
+function initDisclamerUnified(){
+  const checkboxLikud = document.getElementById("disclamerLikud");
+  const checkboxAgenda = document.getElementById("disclamerAgenda");
+  checkboxLikud.addEventListener('change', (event) => {
+    likudChecked = event.target.checked;
+    if (likudChecked && document.getElementById("disclamerAgenda").checked ){
+      enableSaveButton();
+    }else{
+      disableSaveButton()
+    }
+  });
+
+  checkboxAgenda.addEventListener('change', (event) => {
+    agendaChecked = event.target.checked;
+    if (agendaChecked && document.getElementById("disclamerLikud").checked ){
+      enableSaveButton();
+    }else{
+      disableSaveButton()
+    }
+  });
+
+
+}
+
+function disableSaveButton(){
+  $('#save-button').addClass('disabled');
+  $('#save-button').prop('disabled', true);
+}
+
+function enableSaveButton() {
+  $('#save-button').removeClass('disabled');
+  $('#save-button').prop('disabled', false);
 }
 
 function buildWebForm() {
@@ -242,5 +280,3 @@ function cursorFocus(elem) {
   window.scrollTo(x, y);
   elem.focus();
 }
-
-
