@@ -26,6 +26,11 @@ function validateForm() {
     if (f.doubleFormOnly && document.getElementsByName('double-form-radio')[0].checked) {
       return;
     }
+
+    if (f.nonLikudField && !unifiedMode) {
+      return;
+    }
+
     
     let wfID = getWebFormId(f.name);
     let element = document.getElementById(wfID);
