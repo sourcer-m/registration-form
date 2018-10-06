@@ -66,7 +66,7 @@ function buildFormRow(f, index) {
   }
 
   if (f.part === 'emailProvider') {
-    return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only ":"") + `">
+    return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only":"") + `">
     <label for="` + fId + `" class="col-xs-11 col-sm-3 col-form-label">` + f.heb + (f.allowEmpty?"":" <font color=red>*</font>") + `</label>
         <div class="col-xs-11 col-sm-8">
           <div class="input-group">
@@ -99,7 +99,7 @@ function buildFormRow(f, index) {
       </div>`;
   }
 
-  return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only ":"") +  (f.nonLikudField?"nonLikudField ":"") + `">
+  return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only":"") + `">
         <label for="` + fId + `" class="col-xs-6 col-form-label">` + f.heb + (f.allowEmpty?"":" <font color=red>*</font>") + `</label>
         <div class="col-xs-11 align-right">
           ` + input + `
@@ -117,14 +117,6 @@ function initializeDoubleForm() {
     }
   });
 }
-
-function initializeNonLikudFields() {
-      Array.from(document.querySelectorAll(".nonLikudField")).forEach((c) => {
-        c.style.display = unifiedMode ? "block":"none";
-      });
-
-}
-
 
 function isEmpty(field, element) {
   if (field.type === 'input' && !field.partOfDate) {
@@ -204,8 +196,7 @@ function buildWebForm() {
       return;
     }
     if (field.title) {
-      html += '<h2 class="' + (field.doubleFormOnly?"double-form-only":"")
-      + '">' + field.title + '</h2>';
+      html += '<h2 class="' + (field.doubleFormOnly?"double-form-only":"") + '">' + field.title + '</h2>';
     }
     html += buildFormRow(field, index);
   });
@@ -239,7 +230,6 @@ function buildWebForm() {
   initializePads();
   initializeDoubleForm();
   initializeValidation();
-  initializeNonLikudFields();
   initDisclamer();
 
   $('.datepicker').datepicker({
@@ -256,9 +246,6 @@ function fillCanvasForm() {
       let wfID = getWebFormId(f.name);
       const isSingleForm = !document.getElementsByName('double-form-radio')[1].checked;
       console.log(wfID, f.name);
-      if (f.nonLikudField){
-        return;
-      }
       if (f.autoField) {
         document.getElementById(f.name).value = f.autoField;
       } else if (f.partOfDate) {
