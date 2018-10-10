@@ -1125,7 +1125,12 @@
           spouseZehutValue : '',
           spouseMobilePhone : '',
           spouseEmail :'',
-          selectedFont : selectedFont
+          facebookProfile: '',
+          spouseFacebookProfile: '',
+          whoSentYou: '',
+          selectedFont : selectedFont,
+
+
         };
 
         var emailUserNameValue = 'none';
@@ -1186,6 +1191,18 @@
               postMessageValues.spouseMobilePhone =  field.field.value ;
             }
 
+            if(isFacebookUrl(field)) {
+              postMessageValues.facebookProfile =  field.field.value ;
+            }
+
+            if(isWhoSentYou(field)) {
+             postMessageValues.whoSentYou =  field.field.value ;
+            }
+
+            if(isSpouseFacebookUrl(field)) {
+              postMessageValues.spouseFacebookProfile =  field.field.value ;
+            }
+
             postMessageValues.spouseEmail =
               spouseEmailUsernameValue.length > 1 &&  spouseEmailProviderValue.length > 1 ?
                 `${ spouseEmailUsernameValue}@${ spouseEmailProviderValue}` : '';
@@ -1242,6 +1259,19 @@
         function isSpouseEmailProviderValue(fieldItem){
           return fieldItem.name === 'spouse_email_provider' && fieldItem.field.value.length > 1;
         }
+
+        function isFacebookUrl(fieldItem){
+          return fieldItem.name === 'facebook_profile_url' && fieldItem.field.value.length > 1;
+        }
+
+        function isWhoSentYou(fieldItem){
+          return fieldItem.name === 'who_sent_you' && fieldItem.field.value.length > 1;
+        }
+
+        function isSpouseFacebookUrl(fieldItem){
+          return fieldItem.name === 'spouse_facebook_profile_url' && fieldItem.field.value.length > 1;
+        }
+
       }
       function postToParent(pdf , postValues){
         fileToBase64(pdf, (pdf) => {
