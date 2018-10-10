@@ -256,9 +256,8 @@ function fillCanvasForm() {
       const isSingleForm = !document.getElementsByName('double-form-radio')[1].checked;
       console.log(wfID, f.name);
       if (f.nonLikudField){
-        return;
-      }
-      if (f.autoField) {
+        f.field.value = document.getElementById(wfID).value;
+      } else if (f.autoField) {
         document.getElementById(f.name).value = f.autoField;
       } else if (f.partOfDate) {
         let parts = f.name.split("_");
