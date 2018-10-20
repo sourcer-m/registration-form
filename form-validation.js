@@ -23,11 +23,12 @@ function validateForm() {
     if (f.autoField || f.allowEmpty)
       return;
 
-    if (f.doubleFormOnly && document.getElementsByName('double-form-radio')[0].checked) {
+    if (f.doubleFormOnly && document.getElementsByName('double-form-radio')[0].checked ||
+    f.likudOnly && hideLikud) {
       return;
     }
 
-    if (f.nonLikudField && !unifiedMode) {
+    if (f.nonLikudField && hideNonLikud) {
       return;
     }
 
