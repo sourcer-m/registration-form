@@ -57,7 +57,7 @@ function buildFormRow(f, index) {
     let parts = f.name.split("_");
     let datePart = parts[parts.length - 1];
     if (datePart === "year") {
-      input = '<div class="datepicker" id="web-form-' + f.partOfDate + '" data-date="01/01/1980"></div>';
+      input = '<div class="datepicker'+ ' '+ (f.likudOnly?"likud-only":"")+'" id="web-form-' + f.partOfDate + '" data-date="01/01/1980"></div>';
     } else {
       return '';
     }
@@ -82,7 +82,7 @@ function buildFormRow(f, index) {
   }
 
   if (f.name == 'credit_date') {
-    return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only":"") + `">
+    return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only":"") +' ' + (f.likudOnly?"likud-only":"") + `">
         <label for="` + fId + `" class="col-xs-3 col-form-label">` + f.heb + (f.allowEmpty?"":" <font color=red>*</font>") + `</label>
         <div class="col-xs-4 align-middle">
           <select class="form-control" id="credit_date_year">
@@ -99,7 +99,7 @@ function buildFormRow(f, index) {
       </div>`;
   }
 
-  return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only ":"") +  (f.nonLikudField?"nonLikudField ":"") + `">
+  return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only ":"") + ' ' + (f.nonLikudField?"nonLikudField ":"") +' ' + (f.likudOnly?"likud-only":"") +`">
         <label for="` + fId + `" class="col-xs-6 col-form-label">` + f.heb + (f.allowEmpty?"":" <font color=red>*</font>") + `</label>
         <div class="col-xs-11 align-right">
           ` + input + `
@@ -108,20 +108,53 @@ function buildFormRow(f, index) {
       </div>`;
 }
 
-function initializeDoubleForm() {
-  Array.from(document.getElementsByName('double-form-radio')).forEach((radio) => {
-    radio.onclick = function () {
-      Array.from(document.querySelectorAll(".double-form-only")).forEach((c) => {
-        c.style.display = (document.getElementsByName('double-form-radio')[1].checked)?"block":"none";
-      });
+function initializeDoubleFormRadio() {
+  const radioArr = Array.from(document.getElementsByName('double-form-radio'));
+  radioArr.forEach((radio) => {
+    radio.onclick = () => {
+      hideDoubleForm = radioArr[0].checked;
+      showOrHideFields();
     }
   });
 }
 
-function initializeNonLikudFields() {
-      Array.from(document.querySelectorAll(".nonLikudField")).forEach((c) => {
-        c.style.display = unifiedMode ? "block":"none";
-      });
+function initializePakudCheckBox() {
+  const checkBox = document.getElementById('no-likud-fields');
+
+  checkBox.onchange = () => {
+      hideLikud =checkBox.checked;
+      showOrHideFields();
+    };
+}
+
+function initTestsMode() {
+  document.ondblclick =  () => {
+    hideNonLikud = false;
+    showOrHideFields();
+    document.getElementById('noLikudCheckLabel').style.display = "block";
+  }
+}
+
+
+
+function showOrHideFields() {
+  Array.from(document.querySelectorAll(".nonLikudField")).forEach((c) => {
+    c.style.display = shouldHide( c.classList) ? "none": "block";
+  });
+
+  Array.from(document.querySelectorAll(".likud-only")).forEach((c) => {
+    c.style.display = shouldHide( c.classList) ? "none" : "block";
+  });
+
+  Array.from(document.querySelectorAll(".double-form-only")).forEach((c) => {
+    c.style.display =shouldHide(c.classList)? "none" : "block";
+  });
+}
+
+function shouldHide(classList) {
+ return(classList.contains("likud-only") && hideLikud)
+  || (classList.contains("nonLikudField") && hideNonLikud)
+  || (classList.contains("double-form-only") && hideDoubleForm);
 
 }
 
@@ -146,41 +179,29 @@ function isValidInput(field , element) {
   return res;
 }
 
-function initDisclamer() {
-  if (unifiedMode){
-    initDisclamerUnified();
-    return;
-  }
-  let checkboxLikud = document.getElementById("disclamerLikud");
-  checkboxLikud.addEventListener('change', (event) => {
-    if (event.target.checked) {
-      $('#save-button').removeClass('disabled');
-      $('#save-button').prop('disabled', false);
-    } else {
-      $('#save-button').addClass('disabled');
-      $('#save-button').prop('disabled', true);
-    }
-  });
-}
 
-function initDisclamerUnified(){
+function initDisclamer(){
   const checkboxLikud = document.getElementById("disclamerLikud");
   const checkboxAgenda = document.getElementById("disclamerAgenda");
   checkboxLikud.addEventListener('change', (event) => {
     likudChecked = event.target.checked;
-    if (likudChecked && document.getElementById("disclamerAgenda").checked ){
-      enableSaveButton();
-    }else{
-      disableSaveButton()
-    }
+
+      if (likudChecked && (hideNonLikud || document.getElementById("disclamerAgenda").checked)) {
+        enableSaveButton();
+      } else {
+        disableSaveButton()
+      }
+
   });
 
   checkboxAgenda.addEventListener('change', (event) => {
     agendaChecked = event.target.checked;
-    if (agendaChecked && document.getElementById("disclamerLikud").checked ){
-      enableSaveButton();
-    }else{
-      disableSaveButton()
+    if (!hideNonLikud) {
+      if (agendaChecked && document.getElementById("disclamerLikud").checked) {
+        enableSaveButton();
+      } else {
+        disableSaveButton();
+      }
     }
   });
 
@@ -204,7 +225,7 @@ function buildWebForm() {
       return;
     }
     if (field.title) {
-      html += '<h2 class="' + (field.doubleFormOnly?"double-form-only":"") + '">' + field.title + '</h2>';
+      html += '<h2 class="' + (field.doubleFormOnly?"double-form-only":"") +' ' + (field.likudOnly?"likud-only":"") + '">' + field.title + '</h2>';
     }
     html += buildFormRow(field, index);
   });
@@ -215,9 +236,9 @@ function buildWebForm() {
             אני החתום/ה מטה מבקש/ת להצטרף ולהיות חבר/ה בליכוד, תנועת לאומית ליברלית.<br/>
 אני מצהיר בזה כדלקמן: אני מזדהה עם מטרותיה של תנועת הליכוד, איני חבר/ה במפלגה אחרת, ולא הורשעתי בעבירה שיש עימה קלון.  ידוע לי, כי דמי החבר הינם שנתיים וכי תשלומם יעשה אחת לשנה באמצעות הוראת קבע בהרשאה לחיוב חשבוני בבנק או כרטיס אשראי שלי וכי לא תישלח לי הודעה מיוחדת לפני החיוב. ידוע לי כי דמי החבר השנתיים הינם סך של 64 ש"ח ליחיד וסך של 96 ש"ח לזוג וכן כי שיעור דמי החבר השנתיים יקבע מעת לעת, בהתאם להוראות חוקת תנועת הליכוד. אני מסכים/ה לקבל מהליכוד הודעת דואר אלקטרוני ו/או הודעת מסר קצר. כמו כן אני מרשה לתנועת הליכוד להעביר לחברי התנועה את שמי ואת הפרטים שלי לצורך יצירת קשר, לרבות את כתובת הדואר האלקטרוני שלי.<br/>
         </label> 
-</div></div>`
-  if (unifiedMode){
-    html+= `<div class="form-group row"><div class="col-xs-12">
+</div></div>`;
+
+    html+= `<div class="form-group row nonLikudField"><div class="col-xs-12">
              <label class="checkbox-inline">
                        <input type="checkbox" id="disclamerAgenda" class="required">
                        <span>קראתי/קראנו את</span>
@@ -227,7 +248,7 @@ function buildWebForm() {
 
 
            </div></div>`;
-    }
+
 
   html += `<div class="form-group row"><div class="col-xs-8">
     <button type="button" class="btn btn-default navbar-btn btn-primary disabled" id="save-button" disabled>שלח</button>
@@ -236,9 +257,11 @@ function buildWebForm() {
 
 
   initializePads();
-  initializeDoubleForm();
+  initializeDoubleFormRadio();
+  initializePakudCheckBox();
   initializeValidation();
-  initializeNonLikudFields();
+  showOrHideFields();
+  initTestsMode();
   initDisclamer();
 
   $('.datepicker').datepicker({
