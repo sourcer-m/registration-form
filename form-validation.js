@@ -20,26 +20,27 @@ function validateForm() {
   let invalidElement = null;
 
   fields.forEach((f) => {
-    if (f.autoField || f.allowEmpty)
+    if (f.autoField ||
+        f.allowEmpty ||
+        (f.doubleFormOnly && hideDoubleForm) ||
+        (f.likudOnly && hideLikud) ||
+        (f.nonLikudField && hideNonLikud)
+        ){
+
       return;
 
-    if (f.doubleFormOnly && document.getElementsByName('double-form-radio')[0].checked ||
-    f.likudOnly && hideLikud) {
-      return;
     }
 
-    if (f.nonLikudField && hideNonLikud) {
-      return;
-    }
-
-    
-    let wfID = getWebFormId(f.name);
+    let wfID = f.partOfDate? 'web-form-' + f.partOfDate : getWebFormId(f.name);
     let element = document.getElementById(wfID);
+
     if (element && (isEmpty(f, element) || !isValidInput(f,element))) {
       if (!invalidElement) {
         invalidElement = element;
       }
       markAsValid(element, false);
+    } else {
+     markAsValid(element, true);
     }
   });
 
@@ -51,16 +52,35 @@ function validateForm() {
   return (!invalidElement);
 }
 
+function isValidInput(field , element) {
+  let res = true;
+  if (field.type === 'input'){
+    if (field.validationType === 'number' && !isDigitsString(element.value)){
+      res = false
+    }
+  }
+
+  if(field.partOfDate){
+    res = editedDatesNames.includes(field.partOfDate);
+  }
+
+  return res;
+}
+
+
 function isDigitsString(str){
   return /^\d+$/.test(str);
 }
 
 function initializeValidation() {
+
   fields.forEach((f) => {
-    if (f.autoField || f.allowEmpty || f.partOfDate)
+   initDateValidationIfDate(f);
+
+    if (f.autoField || f.allowEmpty)
       return;
     
-    let wfID = getWebFormId(f.name);
+    let wfID = f.partOfDate? 'web-form-' + f.partOfDate : getWebFormId(f.name);
     let element = document.getElementById(wfID);
     if (element) {
       element.oninput = function() {
@@ -71,3 +91,23 @@ function initializeValidation() {
     }
   });
 }
+
+function initDateValidationIfDate(f){
+     if (f.partOfDate && f.name.endsWith('year')){
+
+
+                   $('#web-form-' + f.partOfDate)
+                    .datepicker({
+                                  autoclose: true,
+                                  startView: 0,
+                                  endDate: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
+                                })
+//                        .on("changeDate", function(e) {
+                        .on("changeDate", function(e) {
+                            editedDatesNames.push(f.partOfDate);
+                            console.log('added: ' + f.partOfDate);
+
+                     });
+          }
+    }
+

@@ -160,23 +160,15 @@ function shouldHide(classList) {
 
 
 function isEmpty(field, element) {
-  if (field.type === 'input' && !field.partOfDate) {
+   if (field.partOfDate){
+        return false;
+   }
+  if (field.type === 'input') {
     return (!element.value);
   } else if (field.type === 'signature') {
     return (element.pad.isEmpty());
   }
   return true;
-}
-
-function isValidInput(field , element) {
-  let res = true;
-  if (field.type === 'input'){
-    if (field.validationType === 'number' && !isDigitsString(element.value)){
-      res = false
-    }
-  }
-
-  return res;
 }
 
 
@@ -263,12 +255,6 @@ function buildWebForm() {
   showOrHideFields();
   initTestsMode();
   initDisclamer();
-
-  $('.datepicker').datepicker({
-    autoclose: true,
-    startView: 3,
-    endDate: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
-  });
 
 }
 
