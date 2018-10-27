@@ -102,7 +102,6 @@ function initDateValidationIfDate(f){
                                   startView: 0,
                                   endDate: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
                                 })
-//                        .on("changeDate", function(e) {
                         .on("changeDate", function(e) {
                             editedDatesNames.push(f.partOfDate);
                             console.log('added: ' + f.partOfDate);
