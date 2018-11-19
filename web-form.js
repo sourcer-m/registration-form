@@ -234,7 +234,7 @@ function buildWebForm() {
              <label class="checkbox-inline">
                        <input type="checkbox" id="disclamerAgenda" class="required">
                        <span>קראתי/קראנו את</span>
-                       <span> <a href='https://www.newlikud.org/agenda'>מסמך העקרונות</a></span>
+                       <span> <a href='https://www.newlikud.org/agenda' target="_blank">מסמך העקרונות</a></span>
                        <span>של הליכודניקים החדשים ואני/אנחנו מסכימ/ים איתם.</span>
                    </label>
 
