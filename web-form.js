@@ -41,11 +41,32 @@ function buildInput(f, fId, index) {
   return input;
 }
 
-function getOptionList(start, end, selectedIndex) {
+function getMonthsList() {
+  let monthsArray = ['', 'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
   let html = '';
+  html = '<option value="-1">חודש</option>';
+  for (let i=1; i < monthsArray.length; i++) {
+      html += '<option value="' + i + '">' + monthsArray[i] + '</option>';
+  }
+  return html;
+}
+
+function getOptionList(start, end, reversed, label, displayArray) {
+  let html = '';
+  if (label) {
+    html = '<option value="-1">' + label + '</option>';
+  }
+
+  if (reversed) {
+    for (let i=end; i >= start; i--) {
+      html += '<option value="' + i + '">' +  i  + '</option>';
+    }
+  } else {
   for (let i=start; i <= end; i++) {
     html += '<option value="' + i + '">' + i + '</option>';
   }
+  }
+
   return html;
 }
 
@@ -56,8 +77,23 @@ function buildFormRow(f, index) {
   if (f.partOfDate) {
     let parts = f.name.split("_");
     let datePart = parts[parts.length - 1];
+
     if (datePart === "year") {
-      input = '<div class="datepicker'+ ' '+ (f.likudOnly?"likud-only":"")+'" id="web-form-' + f.partOfDate + '" data-date="01/01/1980"></div>';
+
+     return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only ":"") + ' ' + (f.nonLikudField?"nonLikudField ":"") +' ' + (f.likudOnly?"likud-only":"") +`">
+        <label for="` + fId + `" class="col-xs-11 col-form-label">` + f.heb + (f.allowEmpty?"":" <font color=red>*</font>") + `</label>
+        <div class="col-xs-3 align-right">
+          <select class="form-control" ` + (f.likudOnly?"likud-only":"") + ` id="web-form-day">` + getOptionList(1, 31, false, 'יום') + `</select>
+        </div>
+        <div class="col-xs-4 align-right">
+          <select class="form-control" ` + (f.likudOnly?"likud-only":"") + `  id="web-form-month">` + getMonthsList() + `</select>
+        </div>
+        <div class="col-xs-4 align-right">
+          <select class="form-control" ` + (f.likudOnly?"likud-only":"") + ` id="web-form-year">` + getOptionList(1900, YEAR_INT - 17, true, 'שנה') + `</select>
+        </div>
+        <div class="help-block">נא להזין ` + f.heb + `</div>
+      </div>`;
+
     } else {
       return '';
     }
@@ -276,11 +312,11 @@ function fillCanvasForm() {
           document.getElementById(f.name).value = "";
         } else {
           if (datePart === 'day') {
-            document.getElementById(f.name).value = date.getDate();
+            document.getElementById(f.name).value = document.getElementById('web-form-day').value;
           } else if (datePart === 'month') {
-            document.getElementById(f.name).value = date.getMonth() + 1;
+            document.getElementById(f.name).value = document.getElementById('web-form-month').value;
           } else if (datePart === 'year') {
-            document.getElementById(f.name).value = date.getFullYear().toString().substr(-2);
+            document.getElementById(f.name).value = document.getElementById('web-form-year').value.toString().substr(-2);;
           }
         }
       } else if (f.name == 'credit_date') {
