@@ -83,7 +83,7 @@ function buildFormRow(f, index) {
      return `<div class="form-group row ` + (f.doubleFormOnly?"double-form-only ":"") + ' ' + (f.nonLikudField?"nonLikudField ":"") +' ' + (f.likudOnly?"likud-only":"") +`">
         <label for="` + fId + `" class="col-xs-11 col-form-label">` + f.heb + (f.allowEmpty?"":" <font color=red>*</font>") + `</label>
         <div class="col-xs-3 align-right">
-          <select class="form-control" ` + (f.likudOnly?"likud-only":"") + ` id="web-form-day">` + getOptionList(1, 31, false, 'יום') + `</select>
+          <select class="form-control" style="min-width: 65;"` + (f.likudOnly?"likud-only":"") + ` id="web-form-day">` + getOptionList(1, 31, false, 'יום') + `</select>
         </div>
         <div class="col-xs-4 align-right">
           <select class="form-control" ` + (f.likudOnly?"likud-only":"") + `  id="web-form-month">` + getMonthsList() + `</select>
