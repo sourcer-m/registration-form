@@ -31,7 +31,7 @@ function buildInput(f, fId, index) {
     } else if (f.part === 'emailUsername') {
       tabindex -= 1;
     }
-    input = '<input type="text" class="form-control" id="' + fId + '" placeholder="" tabindex="' + tabindex + '">';
+    input = `<input type="text" autocomplete="off" class="form-control" id="` + fId + `" placeholder="" tabindex="' + tabindex + '">`;
       //<small id="emailHelp" class="form-text text-muted">הערה לגבי השדה הנ״ל</small>
   } else if (f.type === "signature") {
     let style = "border:1px dashed #cccccc; background: url('register-to-likud.png'); background-size: 1140px 2052.34px; background-position: -" + f.x + "px -" + f.y + "px";
