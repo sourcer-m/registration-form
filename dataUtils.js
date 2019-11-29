@@ -1,4 +1,4 @@
-let moment = rquire("moment");
+import moment from 'moment';
 
 var TODAY_STR = moment().format('D.M.YY');
 var DAY_STR = ' ';
